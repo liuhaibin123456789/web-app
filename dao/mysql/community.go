@@ -16,8 +16,9 @@ func GetCommunityList() (communityList []*models.Community, err error) {
 	//	}
 	//}
 	//return
+
 	communityList = make([]*models.Community, 0, 10)
-	err = db.Model(&models.CommunityTable{}).Select("community_id", "community_name").Limit(10).Find(communityList).Error
+	err = db.Model(&models.CommunityTable{}).Limit(10).Find(communityList).Error
 	if err == gorm.ErrRecordNotFound {
 		zap.L().Warn("there is no community in mysql")
 		err = nil

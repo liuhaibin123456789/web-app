@@ -13,7 +13,7 @@ import (
 // CreatePostHandler 创建帖子的处理函数
 func CreatePostHandler(c *gin.Context) {
 	// 1. 获取参数及参数的校验
-	//c.ShouldBindJSON()  // validator --> binding tag
+	//c.ShouldBindJSON()
 	p := new(models.PostTable)
 	if err := c.ShouldBindJSON(p); err != nil {
 		zap.L().Debug("c.ShouldBindJSON(p) error", zap.Any("err", err))
@@ -84,16 +84,38 @@ func GetPostListHandler(c *gin.Context) {
 // @Produce application/json
 // @Param Authorization header string true "Bearer JWT"
 // @Param object query models.ParamPostList false "查询参数"
-// @Security ApiKeyAuth
 // @Success 200 {object} _ResponsePostList
 // @Router /posts2 [get]
 func GetPostListHandler2(c *gin.Context) {
 	// GET请求参数(query string)：/api/v1/posts2?page=1&size=10&order=time
+	page := c.DefaultQuery("page", "1")
+	size := c.DefaultQuery("size", "10")
+	order := c.DefaultQuery("order", models.OrderTime)
+	communityId := c.DefaultQuery("community_id", "0")
+	p, err := strconv.ParseInt(page, 10, 64)
+	if err != nil {
+		zap.L().Error("GetPostListHandler2 with invalid params", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+	s, err := strconv.ParseInt(size, 10, 64)
+	if err != nil {
+		zap.L().Error("GetPostListHandler2 with invalid params", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+	cId, err := strconv.ParseInt(communityId, 10, 64)
+	if err != nil {
+		zap.L().Error("GetPostListHandler2 with invalid params", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
 	// 初始化结构体时指定初始参数
-	p := &models.ParamPostList{
-		Page:  1,
-		Size:  10,
-		Order: models.OrderTime, // magic string
+	pp := &models.ParamPostList{
+		Page:        p,
+		Size:        s,
+		Order:       order,
+		CommunityID: cId,
 	}
 	//c.ShouldBind()  根据请求的数据类型选择相应的方法去获取数据
 	//c.ShouldBindJSON() 如果请求中携带的是json格式的数据，才能用这个方法获取到数据
@@ -102,7 +124,7 @@ func GetPostListHandler2(c *gin.Context) {
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
-	data, err := logic.GetPostListNew(p) // 更新：合二为一
+	data, err := logic.GetPostListNew(pp)
 	// 获取数据
 	if err != nil {
 		zap.L().Error("logic.GetPostList() failed", zap.Error(err))

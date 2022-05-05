@@ -2,6 +2,7 @@ package redis
 
 import (
 	"bluebell/models"
+	"go.uber.org/zap"
 	"strconv"
 	"time"
 
@@ -11,7 +12,7 @@ import (
 func getIDsFormKey(key string, page, size int64) ([]string, error) {
 	start := (page - 1) * size
 	end := start + size - 1
-	// 3. ZREVRANGE 按分数从大到小的顺序查询指定数量的元素
+	// ZREVRANGE 按分数从大到小的顺序查询指定数量的元素
 	return client.ZRevRange(key, start, end).Result()
 }
 
@@ -26,7 +27,7 @@ func GetPostIDsInOrder(p *models.ParamPostList) ([]string, error) {
 	return getIDsFormKey(key, p.Page, p.Size)
 }
 
-// GetPostVoteData 根据ids查询每篇帖子的投赞成票的数据
+// GetPostVoteData todo data数据为空 根据ids查询每篇帖子的投赞成票的数据
 func GetPostVoteData(ids []string) (data []int64, err error) {
 	pipeline := client.Pipeline()
 	for _, id := range ids {
@@ -42,6 +43,7 @@ func GetPostVoteData(ids []string) (data []int64, err error) {
 		v := cmder.(*redis.IntCmd).Val()
 		data = append(data, v)
 	}
+	zap.L().Info("投票数", zap.Any("voteNum", data))
 	return
 }
 
@@ -55,7 +57,6 @@ func GetCommunityPostIDsInOrder(p *models.ParamPostList) ([]string, error) {
 
 	// 使用 zinterstore 把分区的帖子set与帖子分数的 zset 生成一个新的zset
 	// 针对新的zset 按之前的逻辑取数据
-
 	// 社区的key
 	cKey := getRedisKey(KeyCommunitySetPF + strconv.Itoa(int(p.CommunityID)))
 

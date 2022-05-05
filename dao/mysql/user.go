@@ -56,6 +56,11 @@ func encryptPassword(oPassword string) string {
 	return hex.EncodeToString(h.Sum([]byte(oPassword)))
 }
 
+type APIUser struct {
+	UserId   int64
+	Password string
+}
+
 func Login(user *models.User) (err error) {
 	//oPassword := user.Password // 用户登录的密码
 	//sqlStr := `select user_id, username, password from user where username=?`
@@ -76,13 +81,20 @@ func Login(user *models.User) (err error) {
 	// 判断密码是否正确
 	password := encryptPassword(user.Password)
 	//查询密码
-	var rPassword string
-	db.Model(&models.UserTable{}).Select("password").Where("user_name=?", user.Username).Find(&rPassword)
-	if password != rPassword {
+	var param = &APIUser{}
+	err = db.Model(&models.UserTable{}).Where("user_name=?", user.Username).Find(param).Error
+	if password != param.Password {
+		zap.L().Info("func Login(user *models.User) (err error) ", zap.String("right password", param.Password))
 		return ErrorInvalidPassword
 	}
-	zap.L().Debug("func Login(user *models.User) (err error) ", zap.String("right password", rPassword))
+	user.UserID = param.UserId
+	zap.L().Info("func Login(user *models.User) (err error) ", zap.String("right password", param.Password), zap.Any("user", user))
 	return
+}
+
+type APIUser2 struct {
+	UserId   int64
+	UserName string
 }
 
 // GetUserById 根据id获取用户信息
@@ -91,6 +103,9 @@ func GetUserById(uid int64) (user *models.User, err error) {
 	//sqlStr := `select user_id, username from user where user_id = ?`
 	//err = db.Get(user, sqlStr, uid)
 	//return
-	err = db.Model(&models.UserTable{}).Select("user_id", "user_name").Where("user_id=?", uid).Find(&user.UserID, &user.Username).Error
+	var param = &APIUser2{}
+	err = db.Model(&models.UserTable{}).Where("user_id=?", uid).Find(param).Error
+	user.Username = param.UserName
+	user.UserID = param.UserId
 	return
 }

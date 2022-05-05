@@ -63,7 +63,7 @@ func VoteForPost(userID, postID string, value float64) error {
 	// 1. 判断投票限制
 	// 去redis取帖子发布时间
 	postTime := client.ZScore(getRedisKey(KeyPostTimeZSet), postID).Val()
-	if float64(time.Now().Unix())-postTime > oneWeekInSeconds {
+	if float64(time.Now().Unix())-postTime < oneWeekInSeconds {
 		return ErrVoteTimeExpire
 	}
 	// 2和3需要放到一个pipeline事务中操作

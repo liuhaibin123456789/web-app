@@ -13,7 +13,7 @@ func CreatePost(p *models.PostTable) (err error) {
 	//`
 	//_, err = db.Exec(sqlStr, p.ID, p.Title, p.Content, p.AuthorID, p.CommunityID)
 	//return
-	return db.Model(&models.Post{}).Create(p).Error
+	return db.Model(&models.PostTable{}).Create(p).Error
 }
 
 // GetPostById 根据id查询单个贴子数据
@@ -62,21 +62,21 @@ func GetPostListByIDs(ids []string) (posts []*models.PostTable, err error) {
 	//err = db.Select(&postList, query, args...)
 	//return
 	posts = make([]*models.PostTable, 0)
-	post := new(models.PostTable)
 	rows, err := db.Raw("select * from post where post_id in ? order by find_in_set(post_id,?)", ids, strings.Join(ids, ",")).Rows()
 	if err != nil {
 		return
 	}
 	defer rows.Close()
 	for rows.Next() {
+		post := new(models.PostTable)
 		if err = rows.Scan(
 			&post.Id,
 			&post.PostId,
+			&post.Title,
+			&post.Content,
 			&post.AuthorId,
 			&post.CommunityId,
 			&post.Status,
-			&post.Title,
-			&post.Content,
 			&post.CreateTime,
 			&post.UpdateTime,
 		); err != nil {

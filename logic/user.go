@@ -5,11 +5,17 @@ import (
 	"bluebell/models"
 	"bluebell/pkg/jwt"
 	"bluebell/pkg/snowflake"
+	"errors"
 )
 
 // 存放业务逻辑的代码
 
+var ErrorNotEqual = errors.New("重复密码不相等")
+
 func SignUp(p *models.ParamSignUp) (err error) {
+	if p.RePassword != p.Password {
+		return ErrorNotEqual
+	}
 	// 1.判断用户存不存在
 	if err := mysql.CheckUserExist(p.Username); err != nil {
 		return err
@@ -35,6 +41,7 @@ func Login(p *models.ParamLogin) (user *models.User, err error) {
 	if err := mysql.Login(user); err != nil {
 		return nil, err
 	}
+
 	// 生成JWT
 	token, err := jwt.GenToken(user.UserID)
 	if err != nil {

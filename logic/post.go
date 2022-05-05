@@ -97,6 +97,7 @@ func GetPostList2(p *models.ParamPostList) (data []*models.ApiPostDetail, err er
 	if err != nil {
 		return
 	}
+	zap.L().Info("GetPostList2", zap.Any("ids", ids))
 	if len(ids) == 0 {
 		zap.L().Warn("redis.GetPostIDsInOrder(p) return 0 data")
 		return
@@ -108,7 +109,7 @@ func GetPostList2(p *models.ParamPostList) (data []*models.ApiPostDetail, err er
 	if err != nil {
 		return
 	}
-	zap.L().Debug("GetPostList2", zap.Any("posts", posts))
+	zap.L().Info("GetPostList2", zap.Any("posts", posts))
 	// 提前查询好每篇帖子的投票数
 	voteData, err := redis.GetPostVoteData(ids)
 	if err != nil {
@@ -155,14 +156,14 @@ func GetCommunityPostList(p *models.ParamPostList) (data []*models.ApiPostDetail
 		zap.L().Warn("redis.GetPostIDsInOrder(p) return 0 data")
 		return
 	}
-	zap.L().Debug("GetCommunityPostIDsInOrder", zap.Any("ids", ids))
+	zap.L().Info("GetCommunityPostIDsInOrder", zap.Any("ids", ids))
 	// 3. 根据id去MySQL数据库查询帖子详细信息
 	// 返回的数据还要按照我给定的id的顺序返回
 	posts, err := mysql.GetPostListByIDs(ids)
 	if err != nil {
 		return
 	}
-	zap.L().Debug("GetPostList2", zap.Any("posts", posts))
+	zap.L().Info("GetPostList2", zap.Any("posts", posts))
 	// 提前查询好每篇帖子的投票数
 	voteData, err := redis.GetPostVoteData(ids)
 	if err != nil {

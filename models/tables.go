@@ -9,7 +9,7 @@ type UserTable struct {
 	UserId     int64     `json:"user_id,string" gorm:"type:bigint(20);not null;unique" form:"user_id"`
 	UserName   string    `json:"user_name" gorm:"type:varchar(64);not null；unique" form:"user_name"`
 	Password   string    `json:"password" gorm:"type:varchar(64);not null" form:"password"`
-	Email      string    `json:"email" gorm:"type:varchar(11);unique;not null" form:"email"`
+	Email      string    `json:"email" gorm:"type:varchar(11);not null" form:"email"`
 	Gender     int8      `json:"gender" gorm:"type:tinyint(4);not null;default:0" form:"gender"`
 	CreateTime time.Time `json:"create_time" gorm:"not null" form:"create_time"`
 	UpdateTime time.Time `json:"update_time" gorm:"not null" form:"update_time"`
@@ -25,7 +25,7 @@ type PostTable struct {
 	Title       string    `json:"title" form:"title" gorm:"type:varchar(128);not null" binding:"required"`
 	Content     string    `json:"content" form:"content" gorm:"type:varchar(8192);not null" binding:"required"`
 	AuthorId    int64     `json:"author_id,string" form:"user_id" gorm:"not null"`
-	CommunityId int64     `json:"community_id,string" form:"community_id" gorm:"not null" binding:"required"`
+	CommunityId int64     `json:"community_id,string" form:"community_id" gorm:"not null"`
 	Status      int8      `json:"status" form:"status" gorm:"not null"` //默认未通过审核
 	CreateTime  time.Time `json:"create_time" form:"create_time" gorm:"not null"`
 	UpdateTime  time.Time `json:"update_time" form:"update_time" gorm:""`
