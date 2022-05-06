@@ -61,6 +61,7 @@ func SetupRouter(mode string) *gin.Engine {
 	pprof.Register(r) // 注册pprof相关路由
 
 	r.NoRoute(func(c *gin.Context) {
+		//定制404页面
 		c.JSON(http.StatusOK, gin.H{
 			"msg": "404",
 		})
