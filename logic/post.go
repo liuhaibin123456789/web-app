@@ -5,13 +5,16 @@ import (
 	"bluebell/dao/redis"
 	"bluebell/models"
 	"bluebell/pkg/snowflake"
+	"time"
 
 	"go.uber.org/zap"
 )
 
 func CreatePost(p *models.PostTable) (err error) {
-	// 1. 生成post id
+	// 1. 生成post id、时间
 	p.PostId = snowflake.GenID()
+	p.CreateTime = time.Now()
+	p.UpdateTime = time.Now()
 	// 2. 保存到数据库
 	err = mysql.CreatePost(p)
 	if err != nil {
