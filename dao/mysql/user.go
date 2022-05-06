@@ -43,6 +43,7 @@ func InsertUser(user *models.User) (err error) {
 	u := new(models.UserTable)
 	u.UserId = user.UserID
 	u.CreateTime = time.Now()
+	u.UpdateTime = time.Now()
 	u.UserName = user.Username
 	u.Password = user.Password
 	err = db.Model(&models.UserTable{}).Create(u).Error
