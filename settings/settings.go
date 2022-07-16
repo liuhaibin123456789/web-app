@@ -1,7 +1,7 @@
 package settings
 
 import (
-	"fmt"
+	"log"
 	"web_app/dao/mysql"
 	"web_app/tool"
 )
@@ -9,12 +9,12 @@ import (
 func Settings() {
 	//加载配置
 	if err := tool.Viper(); err != nil {
-		fmt.Println("viper出错:", err)
+		log.Fatal("viper出错:", err)
 		return
 	}
 	//初始化日志
 	if err := tool.Logger(); err != nil {
-		fmt.Println("zap出错:", err)
+		log.Fatal("zap出错:", err)
 		return
 	}
 	tool.SugaredDebug("zap logger初始化...")

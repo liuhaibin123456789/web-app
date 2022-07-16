@@ -12,7 +12,7 @@ func Viper() (err error) {
 	//配置文件读取
 	v := viper.New()
 	v.AddConfigPath("./config")
-	v.SetConfigFile("./config/config.yaml")
+	v.SetConfigFile("config.yaml")
 	err = v.ReadInConfig()
 	if err != nil {
 		return err
