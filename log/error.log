@@ -1,0 +1,24 @@
+2022-05-05T11:55:39.580+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Register(user)用户手机号格式错误
+2022-05-05T12:00:46.494+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户密码错误
+2022-05-05T17:02:17.815+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:19.493+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:21.111+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:21.414+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:21.589+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:21.766+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:21.918+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:24.285+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:24.646+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:24.862+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:02:25.045+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:03:05.742+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:03:06.014+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:03:06.189+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:03:17.695+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:03:34.033+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:03:34.224+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-05-05T17:03:34.408+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-07-16T10:21:59.363+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-07-16T10:22:19.065+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Login(user)用户手机号格式错误
+2022-07-16T10:27:29.490+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Register(user)Error 1054: Unknown column 'phone' in 'field list'
+2022-07-16T10:38:47.389+0800	[31mERROR[0m	D:/Go Code/web_app/tool/zap.go:83	service.Register(user)Error 1054: Unknown column 'phone' in 'field list'
